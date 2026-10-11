@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "totalCommands": 94,
+  "totalCommands": 95,
   "commands": [
     {
       "command": "aside",
@@ -991,6 +991,17 @@
       "path": "commands/test-coverage.md"
     },
     {
+      "command": "tiered-loop",
+      "description": "Run a task as a tiered orchestrator loop. The main model plans and verifies, haiku/sonnet sub-agents and ECC specialists do the work, failures re-loop with feedback (max 2 rounds).",
+      "type": "orchestration",
+      "primaryAgents": [],
+      "allAgents": [],
+      "skills": [
+        "tiered-loop"
+      ],
+      "path": "commands/tiered-loop.md"
+    },
+    {
       "command": "update-codemaps",
       "description": "Scan project structure and generate token-lean architecture codemaps.",
       "type": "planning",
@@ -1030,7 +1041,7 @@
     "byType": {
       "build": 2,
       "general": 10,
-      "orchestration": 11,
+      "orchestration": 12,
       "planning": 2,
       "refactoring": 1,
       "review": 15,
