@@ -151,6 +151,7 @@ skills:
   - swiftui-patterns
   - tdd-workflow
   - team-builder
+  - tiered-loop
   - token-budget-advisor
   - unified-memory
   - verification-loop
@@ -250,6 +251,7 @@ commands:
   - skill-create
   - skill-health
   - test-coverage
+  - tiered-loop
   - update-codemaps
   - update-docs
   - vue-review

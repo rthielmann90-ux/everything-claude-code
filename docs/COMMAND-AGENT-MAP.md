@@ -20,6 +20,7 @@ This document lists each slash command and the primary agent(s) or skills it inv
 | `/harness-audit` | — | Harness scorecard (no single agent) |
 | `/loop-start` | loop-operator | Start autonomous loop |
 | `/loop-status` | loop-operator | Inspect loop status |
+| `/tiered-loop` | doc-updater, tdd-guide, build-error-resolver, code-reviewer (routed per subtask) | Opus plans/verifies, haiku/sonnet sub-agents work |
 | `/quality-gate` | — | Quality pipeline (hook-like) |
 | `/model-route` | — | Model recommendation (no agent) |
 | `/orchestrate` | planner, tdd-guide, code-reviewer, security-reviewer, architect | Multi-agent handoff |
