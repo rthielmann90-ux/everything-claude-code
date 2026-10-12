@@ -207,6 +207,7 @@ These lifecycle commands are also available through the `ecc` CLI.
 |---------|-------------|
 | `/loop-start` | Start a recurring agent loop on an interval |
 | `/loop-status` | Check status of running loops |
+| `/tiered-loop` | Main model plans and verifies, haiku/sonnet sub-agents do the work, failures re-loop (max 2 rounds) |
 | `/gan-build` | Generator/evaluator build loop for implementation tasks, bounded iterations and scoring |
 | `/gan-design` | Generator/evaluator design loop for frontend or visual work, bounded iterations and scoring |
 
