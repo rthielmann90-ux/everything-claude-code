@@ -1,4 +1,4 @@
-"""Ollama provider adapter for local models."""
+"""Ollama provider adapter for local models and Ollama Cloud."""
 
 from __future__ import annotations
 
@@ -20,16 +20,27 @@ from llm.core.types import (
 )
 
 
+OLLAMA_LOCAL_URL = "http://localhost:11434"
+OLLAMA_CLOUD_URL = "https://ollama.com"
+DEFAULT_OLLAMA_CLOUD_MODEL = "gemma4:31b"
+
+
 class OllamaProvider(LLMProvider):
+    """Local Ollama by default; Ollama Cloud when OLLAMA_API_KEY is set."""
+
     provider_type = ProviderType.OLLAMA
 
     def __init__(
         self,
         base_url: str | None = None,
         default_model: str | None = None,
+        api_key: str | None = None,
     ) -> None:
-        self.base_url = base_url or os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
-        self.default_model = default_model or os.environ.get("OLLAMA_MODEL", "llama3.2")
+        self.api_key = api_key or os.environ.get("OLLAMA_API_KEY", "")
+        fallback_url = OLLAMA_CLOUD_URL if self.api_key else OLLAMA_LOCAL_URL
+        fallback_model = DEFAULT_OLLAMA_CLOUD_MODEL if self.api_key else "llama3.2"
+        self.base_url = base_url or os.environ.get("OLLAMA_BASE_URL", fallback_url)
+        self.default_model = default_model or os.environ.get("OLLAMA_MODEL", fallback_model)
         self._models = [
             ModelInfo(
                 name="llama3.2",
@@ -74,7 +85,10 @@ class OllamaProvider(LLMProvider):
                 payload["options"] = {"temperature": input.temperature}
 
             data = json.dumps(payload).encode("utf-8")
-            req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
+            headers = {"Content-Type": "application/json"}
+            if self.api_key:
+                headers["Authorization"] = f"Bearer {self.api_key}"
+            req = urllib.request.Request(url, data=data, headers=headers)
 
             with urllib.request.urlopen(req, timeout=60) as response:
                 result = json.loads(response.read().decode("utf-8"))
